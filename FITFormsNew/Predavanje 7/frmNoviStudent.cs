@@ -15,11 +15,11 @@ namespace FITFormsNew.Predavanje_7
     {
 
         public Student _student;
-        public frmNoviStudent()
+        public frmNoviStudent(Student student=null)
         {
             InitializeComponent();
 
-
+            _student= student ?? new Student();
         }
 
         private void UcitajSemestre()
@@ -42,8 +42,28 @@ namespace FITFormsNew.Predavanje_7
         private void frmNoviStudent_Load(object sender, EventArgs e)
         {
             UcitajSemestre();
-            GenerisiIndeks();
-            GenerisiLozinku();
+
+            if(_student.Id!=0)
+            {
+                UcitajPodatke();
+            }
+            else
+            {
+                GenerisiIndeks();
+                GenerisiLozinku();
+            }
+        }
+
+        private void UcitajPodatke()
+        {
+            pbSlika.Image = _student.Slika;
+            txtIme.Text = _student.Ime;
+            txtPrezime.Text = _student.Prezime;
+            comboBox1.SelectedValue = _student.Semestar;
+            txtLozinka.Text = _student.Lozinka;
+            txtIndeks.Text = _student.Indeks;
+            cbAktivan.Checked= _student.Aktivan;
+
         }
 
         private void GenerisiLozinku()
@@ -88,19 +108,24 @@ namespace FITFormsNew.Predavanje_7
         {
             if (ValidanUnos())
             {
-                var student = new Student()
+
+                _student.Aktivan = cbAktivan.Checked;
+                _student.Semestar = (int)comboBox1.SelectedValue;
+                _student.Slika = pbSlika.Image;
+                _student.DatumRodjenja = dtpDatumRodjenja.Value;
+                _student.Ime = txtIme.Text;
+                _student.Prezime = txtPrezime.Text;
+                _student.Indeks = txtIndeks.Text;
+                _student.Lozinka = txtLozinka.Text;
+                
+                
+
+                if(_student.Id==0)
                 {
-                    Aktivan = cbAktivan.Checked,
-                    Semestar = (int)comboBox1.SelectedValue,
-                    Slika = pbSlika.Image,
-                    DatumRodjenja = dtpDatumRodjenja.Value,
-                    Id = InMemoryDb.Studenti.Count + 1,
-                    Ime = txtIme.Text,
-                    Prezime = txtPrezime.Text,
-                    Indeks = txtIndeks.Text,
-                    Lozinka = txtLozinka.Text
-                };
-                InMemoryDb.Studenti.Add(student);
+                    _student.Id = InMemoryDb.Studenti.Count + 1;
+                    InMemoryDb.Studenti.Add(_student);
+
+                }
 
                 this.DialogResult = DialogResult.OK;
                 Close();

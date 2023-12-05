@@ -38,5 +38,15 @@ namespace FITFormsNew.Predavanje_7
                 UcitajStudente();
             }
         }
+
+        private void dgvStudenti_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var odabraniStudent = dgvStudenti.SelectedRows[0].DataBoundItem as Student;
+
+            frmNoviStudent formaIzmjena=new frmNoviStudent(odabraniStudent);
+           
+            if (formaIzmjena.ShowDialog() == DialogResult.OK)
+                UcitajStudente();
+        }
     }
 }
