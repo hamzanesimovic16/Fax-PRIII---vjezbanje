@@ -13,6 +13,8 @@ namespace FITFormsNew.Predavanje_7
 {
     public partial class frmNoviStudent : Form
     {
+
+        public Student _student;
         public frmNoviStudent()
         {
             InitializeComponent();
