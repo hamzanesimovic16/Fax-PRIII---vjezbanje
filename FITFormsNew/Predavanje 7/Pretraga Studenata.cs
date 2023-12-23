@@ -24,10 +24,10 @@ namespace FITFormsNew.Predavanje_7
             UcitajStudente();
         }
 
-        private void UcitajStudente()
+        private void UcitajStudente(List<Student>studenti=null)
         {
             dgvStudenti.DataSource = null;
-            dgvStudenti.DataSource = InMemoryDb.Studenti;
+            dgvStudenti.DataSource =studenti ?? InMemoryDb.Studenti;
         }
 
         private void btnNoviStudent_Click(object sender, EventArgs e)
@@ -43,10 +43,26 @@ namespace FITFormsNew.Predavanje_7
         {
             var odabraniStudent = dgvStudenti.SelectedRows[0].DataBoundItem as Student;
 
-            frmNoviStudent formaIzmjena=new frmNoviStudent(odabraniStudent);
-           
+            frmNoviStudent formaIzmjena = new frmNoviStudent(odabraniStudent);
+
             if (formaIzmjena.ShowDialog() == DialogResult.OK)
                 UcitajStudente();
+        }
+
+        private void txtFilter_TextChanged(object sender, EventArgs e)
+        {
+            var rezultat=InMemoryDb.Studenti.Where(Filtriraj).ToList();
+
+           UcitajStudente(rezultat);
+        }
+
+        private bool Filtriraj(Student student)
+        {
+            var text=txtFilter.Text.ToLower();
+
+            return student.Ime.ToLower().Contains(text) ||
+                   student.Prezime.ToLower().Contains(text) ||
+                   student.Indeks.ToLower().Contains(text);
         }
     }
 }
