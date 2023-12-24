@@ -17,6 +17,7 @@ namespace FITFormsNew.Predavanje_7
         {
             InitializeComponent();
             dgvStudenti.AutoGenerateColumns = false;
+
         }
 
         private void frmPretragaStudenata_Load(object sender, EventArgs e)
