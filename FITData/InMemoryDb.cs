@@ -8,6 +8,42 @@
 
         public static List<Semestar> Semestri = GenerisiSemestre();
 
+        public static List<Predmet> Predmeti = GenerisiPredmete();
+
+        private static List<Predmet> GenerisiPredmete()
+        {
+            return new List<Predmet>() {
+                new Predmet()
+                {
+                    Id = 1,
+                    Naziv="Programiranje 1",
+                    Semestar=1
+                },
+                  new Predmet()
+                {
+                    Id = 2,
+                    Naziv="Programiranje 2",
+                    Semestar=2
+                   
+                },
+                    new Predmet()
+                {
+                    Id = 3,
+                    Naziv="Digitalna logika",
+                    Semestar=1
+                    
+                },
+                      new Predmet()
+                {
+                    Id = 4,
+                    Naziv="Programiranje 3",
+                    Semestar=3
+                  
+                }
+
+            };
+        }
+
         private static List<Semestar> GenerisiSemestre()
         {
             return new List<Semestar>() {

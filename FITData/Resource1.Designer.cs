@@ -70,11 +70,29 @@ namespace FITData {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Vec se ponavlja.
+        /// </summary>
+        internal static string DuplicatedCourse {
+            get {
+                return ResourceManager.GetString("DuplicatedCourse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @edu.fit.ba.
         /// </summary>
         internal static string FitMailDomena {
             get {
                 return ResourceManager.GetString("FitMailDomena", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trazena vrijednost.
+        /// </summary>
+        internal static string RequiredValue {
+            get {
+                return ResourceManager.GetString("RequiredValue", resourceCulture);
             }
         }
         

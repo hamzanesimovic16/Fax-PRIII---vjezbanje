@@ -120,8 +120,14 @@
   <data name="AccountNotActive" xml:space="preserve">
     <value>Vas korisnicki racun nije aktivan!</value>
   </data>
+  <data name="DuplicatedCourse" xml:space="preserve">
+    <value>Vec se ponavlja</value>
+  </data>
   <data name="FitMailDomena" xml:space="preserve">
     <value>@edu.fit.ba</value>
+  </data>
+  <data name="RequiredValue" xml:space="preserve">
+    <value>Trazena vrijednost</value>
   </data>
   <data name="UsernameOrPasswordIncorrect" xml:space="preserve">
     <value>Korisnicko ime ili lozinka su pogresni!</value>

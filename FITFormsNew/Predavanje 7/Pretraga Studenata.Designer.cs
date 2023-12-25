@@ -29,14 +29,15 @@
         private void InitializeComponent()
         {
             dgvStudenti = new DataGridView();
+            btnNoviStudent = new Button();
+            txtFilter = new TextBox();
             Indeks = new DataGridViewTextBoxColumn();
             Ime = new DataGridViewTextBoxColumn();
             Prezime = new DataGridViewTextBoxColumn();
             DatumRodjenja = new DataGridViewTextBoxColumn();
             Semestar = new DataGridViewTextBoxColumn();
             Aktivan = new DataGridViewCheckBoxColumn();
-            btnNoviStudent = new Button();
-            txtFilter = new TextBox();
+            Polozeni = new DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)dgvStudenti).BeginInit();
             SuspendLayout();
             // 
@@ -45,7 +46,7 @@
             dgvStudenti.AllowUserToAddRows = false;
             dgvStudenti.AllowUserToDeleteRows = false;
             dgvStudenti.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvStudenti.Columns.AddRange(new DataGridViewColumn[] { Indeks, Ime, Prezime, DatumRodjenja, Semestar, Aktivan });
+            dgvStudenti.Columns.AddRange(new DataGridViewColumn[] { Indeks, Ime, Prezime, DatumRodjenja, Semestar, Aktivan, Polozeni });
             dgvStudenti.Location = new Point(12, 38);
             dgvStudenti.Name = "dgvStudenti";
             dgvStudenti.ReadOnly = true;
@@ -54,6 +55,24 @@
             dgvStudenti.Size = new Size(776, 371);
             dgvStudenti.TabIndex = 0;
             dgvStudenti.CellContentClick += dgvStudenti_CellContentClick;
+            // 
+            // btnNoviStudent
+            // 
+            btnNoviStudent.Location = new Point(647, 9);
+            btnNoviStudent.Name = "btnNoviStudent";
+            btnNoviStudent.Size = new Size(115, 23);
+            btnNoviStudent.TabIndex = 1;
+            btnNoviStudent.Text = "Novi student";
+            btnNoviStudent.UseVisualStyleBackColor = true;
+            btnNoviStudent.Click += btnNoviStudent_Click;
+            // 
+            // txtFilter
+            // 
+            txtFilter.Location = new Point(12, 9);
+            txtFilter.Name = "txtFilter";
+            txtFilter.Size = new Size(629, 23);
+            txtFilter.TabIndex = 2;
+            txtFilter.TextChanged += txtFilter_TextChanged;
             // 
             // Indeks
             // 
@@ -102,23 +121,13 @@
             Aktivan.Resizable = DataGridViewTriState.True;
             Aktivan.SortMode = DataGridViewColumnSortMode.Automatic;
             // 
-            // btnNoviStudent
+            // Polozeni
             // 
-            btnNoviStudent.Location = new Point(647, 9);
-            btnNoviStudent.Name = "btnNoviStudent";
-            btnNoviStudent.Size = new Size(115, 23);
-            btnNoviStudent.TabIndex = 1;
-            btnNoviStudent.Text = "Novi student";
-            btnNoviStudent.UseVisualStyleBackColor = true;
-            btnNoviStudent.Click += btnNoviStudent_Click;
-            // 
-            // txtFilter
-            // 
-            txtFilter.Location = new Point(12, 9);
-            txtFilter.Name = "txtFilter";
-            txtFilter.Size = new Size(629, 23);
-            txtFilter.TabIndex = 2;
-            txtFilter.TextChanged += txtFilter_TextChanged;
+            Polozeni.HeaderText = "";
+            Polozeni.Name = "Polozeni";
+            Polozeni.ReadOnly = true;
+            Polozeni.Text = "Predmeti";
+            Polozeni.UseColumnTextForButtonValue = true;
             // 
             // frmPretragaStudenata
             // 
@@ -143,12 +152,13 @@
 
         private DataGridView dgvStudenti;
         private Button btnNoviStudent;
+        private TextBox txtFilter;
         private DataGridViewTextBoxColumn Indeks;
         private DataGridViewTextBoxColumn Ime;
         private DataGridViewTextBoxColumn Prezime;
         private DataGridViewTextBoxColumn DatumRodjenja;
         private DataGridViewTextBoxColumn Semestar;
         private DataGridViewCheckBoxColumn Aktivan;
-        private TextBox txtFilter;
+        private DataGridViewButtonColumn Polozeni;
     }
 }

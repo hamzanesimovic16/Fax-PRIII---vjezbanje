@@ -13,5 +13,7 @@ namespace FITData
         public const string UsernameOrPasswordIncorrect = "UsernameOrPasswordIncorrect";
         public const string AccountNotActive = "AccountNotActive";
         public const string FitMailDomena = "FitMailDomena";
+        public const string RequiredValue = "RequiredValue";
+        public const string DuplicatedCourse = "DuplicatedCourse";
     }
 }

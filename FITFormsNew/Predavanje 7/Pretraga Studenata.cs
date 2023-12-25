@@ -25,10 +25,10 @@ namespace FITFormsNew.Predavanje_7
             UcitajStudente();
         }
 
-        private void UcitajStudente(List<Student>studenti=null)
+        private void UcitajStudente(List<Student> studenti = null)
         {
             dgvStudenti.DataSource = null;
-            dgvStudenti.DataSource =studenti ?? InMemoryDb.Studenti;
+            dgvStudenti.DataSource = studenti ?? InMemoryDb.Studenti;
         }
 
         private void btnNoviStudent_Click(object sender, EventArgs e)
@@ -42,24 +42,31 @@ namespace FITFormsNew.Predavanje_7
 
         private void dgvStudenti_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+
             var odabraniStudent = dgvStudenti.SelectedRows[0].DataBoundItem as Student;
 
-            frmNoviStudent formaIzmjena = new frmNoviStudent(odabraniStudent);
 
-            if (formaIzmjena.ShowDialog() == DialogResult.OK)
-                UcitajStudente();
+            Form forma = null;
+            if (dgvStudenti.CurrentCell is DataGridViewButtonCell)
+                forma = new frmPolozeniPredmeti(odabraniStudent);
+            else
+                forma = new frmNoviStudent(odabraniStudent);
+
+            forma.ShowDialog();
+
+            UcitajStudente();
         }
 
         private void txtFilter_TextChanged(object sender, EventArgs e)
         {
-            var rezultat=InMemoryDb.Studenti.Where(Filtriraj).ToList();
+            var rezultat = InMemoryDb.Studenti.Where(Filtriraj).ToList();
 
-           UcitajStudente(rezultat);
+            UcitajStudente(rezultat);
         }
 
         private bool Filtriraj(Student student)
         {
-            var text=txtFilter.Text.ToLower();
+            var text = txtFilter.Text.ToLower();
 
             return student.Ime.ToLower().Contains(text) ||
                    student.Prezime.ToLower().Contains(text) ||
