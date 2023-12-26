@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Drawing.Imaging;
 
 namespace FITData
 {
@@ -25,6 +26,21 @@ namespace FITData
             cb.ValueMember = $"{valueMember}";
             cb.DisplayMember = $"{displayMember}";
             
+        }
+
+
+        public static Image UcitajSliku(this byte[] data)
+        {
+            var ms=new MemoryStream(data);
+
+            return Image.FromStream(ms);
+        }
+
+        public static byte[] PrebaciUBajtove(this Image slika)
+        {
+            var ms = new MemoryStream();
+            slika.Save(ms, ImageFormat.Jpeg);
+            return ms.ToArray();
         }
     }
 }

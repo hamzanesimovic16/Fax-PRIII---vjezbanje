@@ -56,7 +56,7 @@ namespace FITFormsNew.Predavanje_7
 
         private void UcitajPodatke()
         {
-            pbSlika.Image = _student.Slika;
+            pbSlika.Image = _student.Slika.UcitajSliku();
             txtIme.Text = _student.Ime;
             txtPrezime.Text = _student.Prezime;
             comboBox1.SelectedValue = _student.Semestar;
@@ -111,7 +111,7 @@ namespace FITFormsNew.Predavanje_7
 
                 _student.Aktivan = cbAktivan.Checked;
                 _student.Semestar = (int)comboBox1.SelectedValue;
-                _student.Slika = pbSlika.Image;
+                _student.Slika = pbSlika.Image.PrebaciUBajtove();
                 _student.DatumRodjenja = dtpDatumRodjenja.Value;
                 _student.Ime = txtIme.Text;
                 _student.Prezime = txtPrezime.Text;

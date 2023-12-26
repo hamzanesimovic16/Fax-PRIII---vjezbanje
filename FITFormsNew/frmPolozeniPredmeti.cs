@@ -40,7 +40,7 @@ namespace FITFormsNew
         {
             lblBrojIndeksa.Text = odabraniStudent.Indeks;
             lblImePrezime.Text = $"{odabraniStudent.Ime} {odabraniStudent.Prezime}";
-            pbSlika.Image = odabraniStudent.Slika;
+            pbSlika.Image = odabraniStudent.Slika.UcitajSliku();
         }
 
         private void UcitajPredmete()

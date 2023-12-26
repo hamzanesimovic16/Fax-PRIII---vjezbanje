@@ -1,5 +1,28 @@
-﻿namespace FITData
+﻿using Microsoft.EntityFrameworkCore;
+using System.Configuration;
+
+namespace FITData
 {
+
+    public class DLWMSDbContext : DbContext
+    {
+        private readonly string dbPutanja;
+
+        public DLWMSDbContext()
+        {
+            dbPutanja = ConfigurationManager.ConnectionStrings["DLWMSBaza"].ConnectionString;
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+               
+            optionsBuilder.UseSqlite(dbPutanja);
+        }
+
+        public DbSet<Predmet> Predmeti { get; set; }   
+    }
+
+
     public class InMemoryDb
     {
         public static List<Korisnik> Korisnici = GenerisiKorisnike();

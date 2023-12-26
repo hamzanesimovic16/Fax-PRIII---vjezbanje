@@ -21,7 +21,7 @@ namespace FITData
         public DateTime DatumRodjenja { get; set; }
         public bool Aktivan { get; set; }
         public int Semestar { get; set; }
-        public Image Slika { get; set; }
+        public byte[] Slika { get; set; }
 
         public override string ToString()
         {
