@@ -20,6 +20,7 @@ namespace FITData
         }
 
         public DbSet<Predmet> Predmeti { get; set; }   
+        public DbSet<Student> Studenti { get; set; }    
     }
 
 

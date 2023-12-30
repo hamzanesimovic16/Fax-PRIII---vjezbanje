@@ -28,8 +28,8 @@ namespace FITData
             return $"{Indeks} {Ime} {Prezime}";
         }
 
-        public int GradID { get; set; }
-        public Grad Grad { get; set; }
+        //public int GradID { get; set; }
+        //public Grad Grad { get; set; }
         public List<PolozeniPredmet> PolozeniPredmeti { get; set; }
 
     }

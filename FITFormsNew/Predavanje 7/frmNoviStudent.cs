@@ -1,4 +1,5 @@
 ﻿using FITData;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,6 +14,7 @@ namespace FITFormsNew.Predavanje_7
 {
     public partial class frmNoviStudent : Form
     {
+        DLWMSDbContext db=new DLWMSDbContext();
 
         public Student _student;
         public frmNoviStudent(Student student=null)
@@ -122,10 +124,15 @@ namespace FITFormsNew.Predavanje_7
 
                 if(_student.Id==0)
                 {
-                    _student.Id = InMemoryDb.Studenti.Count + 1;
-                    InMemoryDb.Studenti.Add(_student);
+                    //_student.Id = InMemoryDb.Studenti.Count + 1;  nije vise potrenbo jer je Id u bazi auto increment
+                    db.Studenti.Add( _student );
 
                 }
+                else
+                {
+                    db.Entry(_student ).State=EntityState.Modified;
+                }
+                    db.SaveChanges();
 
                 this.DialogResult = DialogResult.OK;
                 Close();

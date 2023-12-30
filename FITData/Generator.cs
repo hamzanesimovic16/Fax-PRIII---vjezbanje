@@ -8,6 +8,8 @@ namespace FITData
 {
     public class Generator
     {
+
+       public static DLWMSDbContext db=new DLWMSDbContext();
         public static string generisiLozinku(int brojZnakova = 15)
         {
             string znakovi = "1234567890-=qwertyhujikolp[]asdfghjkl;'\\zxcvbnm,./QWERTYUIOP{}ASDFGHJKL:||ZXCVBNM<>?";
@@ -28,7 +30,7 @@ namespace FITData
 
         public static string GenIndeks()
         {
-            return $"IB{(DateTime.Now.Year - 2000) * 10000 + InMemoryDb.Studenti.Count + 1}";
+            return $"IB{((DateTime.Now.Year - 2000) * 10000) + db.Studenti.ToList().Count + 1}";
         }
 
 

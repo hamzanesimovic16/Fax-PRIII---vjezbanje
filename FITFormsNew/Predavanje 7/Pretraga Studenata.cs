@@ -13,6 +13,8 @@ namespace FITFormsNew.Predavanje_7
 {
     public partial class frmPretragaStudenata : Form
     {
+        DLWMSDbContext db=new DLWMSDbContext();
+
         public frmPretragaStudenata()
         {
             InitializeComponent();
@@ -28,7 +30,7 @@ namespace FITFormsNew.Predavanje_7
         private void UcitajStudente(List<Student> studenti = null)
         {
             dgvStudenti.DataSource = null;
-            dgvStudenti.DataSource = studenti ?? InMemoryDb.Studenti;
+            dgvStudenti.DataSource = studenti ?? db.Studenti.ToList();
         }
 
         private void btnNoviStudent_Click(object sender, EventArgs e)
@@ -59,7 +61,7 @@ namespace FITFormsNew.Predavanje_7
 
         private void txtFilter_TextChanged(object sender, EventArgs e)
         {
-            var rezultat = InMemoryDb.Studenti.Where(Filtriraj).ToList();
+            var rezultat = db.Studenti.Where(Filtriraj).ToList();
 
             UcitajStudente(rezultat);
         }
