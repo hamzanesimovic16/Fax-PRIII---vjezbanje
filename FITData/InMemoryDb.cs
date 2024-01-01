@@ -1,27 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Configuration;
-
-namespace FITData
+﻿namespace FITData
 {
-
-    public class DLWMSDbContext : DbContext
-    {
-        private readonly string dbPutanja;
-
-        public DLWMSDbContext()
-        {
-            dbPutanja = ConfigurationManager.ConnectionStrings["DLWMSBaza"].ConnectionString;
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-               
-            optionsBuilder.UseSqlite(dbPutanja);
-        }
-
-        public DbSet<Predmet> Predmeti { get; set; }   
-        public DbSet<Student> Studenti { get; set; }    
-    }
 
 
     public class InMemoryDb
@@ -109,7 +87,7 @@ namespace FITData
             new Student()
             {
                 Aktivan=true,
-                Semestar=1,
+                SemestarId=1,
                 DatumRodjenja=new DateTime(2003,8,14),
                 Id=1,
                 Ime="Hamza",
@@ -122,7 +100,7 @@ namespace FITData
              new Student()
             {
                 Aktivan=true,
-                Semestar=1,
+                SemestarId=1,
                 DatumRodjenja=new DateTime(2003,6,23),
                 Id=2,
                 Ime="Almedin",

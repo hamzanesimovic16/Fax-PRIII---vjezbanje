@@ -1,5 +1,6 @@
 ﻿using FITData;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,21 +15,23 @@ namespace FITFormsNew.Predavanje_7
 {
     public partial class frmNoviStudent : Form
     {
-        DLWMSDbContext db=new DLWMSDbContext();
+        DLWMSDbContext db = new DLWMSDbContext();
 
         public Student _student;
-        public frmNoviStudent(Student student=null)
+        public frmNoviStudent(Student student = null)
         {
             InitializeComponent();
-
-            _student= student ?? new Student();
+            dataGridView1.AutoGenerateColumns = false;
+            _student = student ?? new Student();
         }
 
         private void UcitajSemestre()
         {
-            comboBox1.DataSource = InMemoryDb.Semestri;
-            comboBox1.DisplayMember = "Oznaka";
-            comboBox1.ValueMember = "Id";
+            comboBox1.UcitajPodatke(db.Semestri.ToList(), "Id", "Oznaka");
+
+            //comboBox1.DataSource = InMemoryDb.Semestri;
+            //comboBox1.DisplayMember = "Oznaka";
+            //comboBox1.ValueMember = "Id";
 
         }
 
@@ -44,8 +47,9 @@ namespace FITFormsNew.Predavanje_7
         private void frmNoviStudent_Load(object sender, EventArgs e)
         {
             UcitajSemestre();
+            UcitajUloge();
 
-            if(_student.Id!=0)
+            if (_student.Id != 0)
             {
                 UcitajPodatke();
             }
@@ -54,6 +58,17 @@ namespace FITFormsNew.Predavanje_7
                 GenerisiIndeks();
                 GenerisiLozinku();
             }
+
+        }
+
+        private void UcitajUloge()
+        {
+            cmbUloge.DataSource = null;
+            cmbUloge.DataSource = db.Uloge.ToList();
+
+            clbUloge.Items.AddRange(db.Uloge.ToArray());
+
+
         }
 
         private void UcitajPodatke()
@@ -61,10 +76,29 @@ namespace FITFormsNew.Predavanje_7
             pbSlika.Image = _student.Slika.UcitajSliku();
             txtIme.Text = _student.Ime;
             txtPrezime.Text = _student.Prezime;
-            comboBox1.SelectedValue = _student.Semestar;
+            comboBox1.SelectedValue = _student.SemestarId;
             txtLozinka.Text = _student.Lozinka;
             txtIndeks.Text = _student.Indeks;
-            cbAktivan.Checked= _student.Aktivan;
+            cbAktivan.Checked = _student.Aktivan;
+            UcitajUlogeStudenta();
+        }
+
+        private void UcitajUlogeStudenta()
+        {
+            dataGridView1.DataSource = null;
+            dataGridView1.DataSource = _student.Uloga;
+
+            List<int> indeksiZaCheckListu = new List<int>();
+
+            foreach (var uloga in _student.Uloga)
+            {
+                indeksiZaCheckListu.Add(uloga.Id);
+            }
+
+            foreach (var indeks in indeksiZaCheckListu)
+            {
+                clbUloge.SetItemChecked(indeks - 1, true);
+            }
 
         }
 
@@ -112,27 +146,27 @@ namespace FITFormsNew.Predavanje_7
             {
 
                 _student.Aktivan = cbAktivan.Checked;
-                _student.Semestar = (int)comboBox1.SelectedValue;
+                _student.SemestarId = (int)comboBox1.SelectedValue;
                 _student.Slika = pbSlika.Image.PrebaciUBajtove();
                 _student.DatumRodjenja = dtpDatumRodjenja.Value;
                 _student.Ime = txtIme.Text;
                 _student.Prezime = txtPrezime.Text;
                 _student.Indeks = txtIndeks.Text;
                 _student.Lozinka = txtLozinka.Text;
-                
-                
 
-                if(_student.Id==0)
+
+
+                if (_student.Id == 0)
                 {
                     //_student.Id = InMemoryDb.Studenti.Count + 1;  nije vise potrenbo jer je Id u bazi auto increment
-                    db.Studenti.Add( _student );
+                    db.Studenti.Add(_student);
 
                 }
                 else
                 {
-                    db.Entry(_student ).State=EntityState.Modified;
+                    db.Entry(_student).State = EntityState.Modified;
                 }
-                    db.SaveChanges();
+                db.SaveChanges();
 
                 this.DialogResult = DialogResult.OK;
                 Close();
@@ -142,11 +176,24 @@ namespace FITFormsNew.Predavanje_7
 
         private bool ValidanUnos()
         {
-            return 
+            return
                 Validator.Validiraj(pbSlika, errorProvider1, "Obavezna vrijednost") &&
                 Validator.Validiraj(txtIme, errorProvider1, "Obavezna vrijednost") &&
                 Validator.Validiraj(txtPrezime, errorProvider1, "Obavezna vrijednost") &&
                 Validator.Validiraj(comboBox1, errorProvider1, "Obavezna vrijednost");
+        }
+
+        private void btnOdaberiUlogu_Click(object sender, EventArgs e)
+        {
+            var uloga = cmbUloge.SelectedItem as Uloga;
+
+            if (_student.Uloga.Where(u => u.Id == uloga.Id).Count() > 0)
+            {
+                MessageBox.Show("Uloga je vec unesena", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            _student.Uloga.Add(uloga);
+            UcitajUlogeStudenta();
         }
     }
 }

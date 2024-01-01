@@ -16,6 +16,8 @@ namespace FITFormsNew
     {
         private Student? odabraniStudent;
 
+        DLWMSDbContext db=new DLWMSDbContext();
+
         public frmPolozeniPredmeti(Student odabraniStudent)
         {
             InitializeComponent();
@@ -45,13 +47,13 @@ namespace FITFormsNew
 
         private void UcitajPredmete()
         {
-            cmbPredmet.UcitajPodatke(InMemoryDb.Predmeti);
+            cmbPredmet.UcitajPodatke(db.Predmeti.ToList());
         }
 
         private void UcitajPolozenePredmete()
         {
             dgvPolozeniPredmeti.DataSource = null;
-            dgvPolozeniPredmeti.DataSource = odabraniStudent.PolozeniPredmeti;
+            dgvPolozeniPredmeti.DataSource = db.PolozeniPredmeti.Where(s=>s.StudentId==odabraniStudent.Id).ToList();
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -64,7 +66,7 @@ namespace FITFormsNew
             if (ValidanUnos())
             {
                 var predmet = cmbPredmet.SelectedItem as Predmet;
-                var ponovljenUnos = odabraniStudent.PolozeniPredmeti.Where(p => p.PredmetId == predmet.Id).Count() > 0;
+                var ponovljenUnos = db.PolozeniPredmeti.Where(p => p.StudentId == odabraniStudent.Id && predmet.Id==p.PredmetId).Count() > 0;
 
                 if (ponovljenUnos)
                 {
@@ -77,9 +79,13 @@ namespace FITFormsNew
                 polozeniPredmet.PredmetId = predmet.Id;
                 polozeniPredmet.Ocjena = int.Parse(cmbOcjena.Text);
                 polozeniPredmet.DatumPolaganja = dtpDatumPolaganja.Value;
-                polozeniPredmet.Id = odabraniStudent.PolozeniPredmeti.Count() + 1;
+                polozeniPredmet.StudentId = odabraniStudent.Id;
+                //polozeniPredmet.Id = odabraniStudent.PolozeniPredmeti.Count() + 1;
 
-                odabraniStudent.PolozeniPredmeti.Add(polozeniPredmet);
+                //odabraniStudent.PolozeniPredmeti.Add(polozeniPredmet);
+
+                db.PolozeniPredmeti.Add(polozeniPredmet);
+                db.SaveChanges();
                 UcitajPolozenePredmete();
 
             }

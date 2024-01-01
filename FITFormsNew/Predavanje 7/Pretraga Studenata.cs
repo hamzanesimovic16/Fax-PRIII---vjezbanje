@@ -1,4 +1,5 @@
 ﻿using FITData;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,7 +14,7 @@ namespace FITFormsNew.Predavanje_7
 {
     public partial class frmPretragaStudenata : Form
     {
-        DLWMSDbContext db=new DLWMSDbContext();
+        DLWMSDbContext db = new DLWMSDbContext();
 
         public frmPretragaStudenata()
         {
@@ -29,8 +30,10 @@ namespace FITFormsNew.Predavanje_7
 
         private void UcitajStudente(List<Student> studenti = null)
         {
+            var lista = db.Studenti.Include(s => s.Semestar).Include(t => t.Uloga).ToList();
+
             dgvStudenti.DataSource = null;
-            dgvStudenti.DataSource = studenti ?? db.Studenti.ToList();
+            dgvStudenti.DataSource = studenti ?? lista;
         }
 
         private void btnNoviStudent_Click(object sender, EventArgs e)

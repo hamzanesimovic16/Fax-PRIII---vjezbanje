@@ -50,8 +50,14 @@
             cbAktivan = new CheckBox();
             btnNovaLozinka = new Button();
             errorProvider1 = new ErrorProvider(components);
+            dataGridView1 = new DataGridView();
+            Naziv = new DataGridViewTextBoxColumn();
+            cmbUloge = new ComboBox();
+            btnOdaberiUlogu = new Button();
+            clbUloge = new CheckedListBox();
             ((System.ComponentModel.ISupportInitialize)pbSlika).BeginInit();
             ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // lblIme
@@ -173,7 +179,7 @@
             // 
             // btnSpasi
             // 
-            btnSpasi.Location = new Point(446, 234);
+            btnSpasi.Location = new Point(913, 235);
             btnSpasi.Name = "btnSpasi";
             btnSpasi.Size = new Size(75, 23);
             btnSpasi.TabIndex = 9;
@@ -230,11 +236,62 @@
             // 
             errorProvider1.ContainerControl = this;
             // 
+            // dataGridView1
+            // 
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Naziv });
+            dataGridView1.Location = new Point(583, 60);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.ReadOnly = true;
+            dataGridView1.RowTemplate.Height = 25;
+            dataGridView1.Size = new Size(223, 150);
+            dataGridView1.TabIndex = 17;
+            // 
+            // Naziv
+            // 
+            Naziv.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Naziv.DataPropertyName = "Naziv";
+            Naziv.HeaderText = "Naziv";
+            Naziv.Name = "Naziv";
+            Naziv.ReadOnly = true;
+            // 
+            // cmbUloge
+            // 
+            cmbUloge.FormattingEnabled = true;
+            cmbUloge.Location = new Point(583, 30);
+            cmbUloge.Name = "cmbUloge";
+            cmbUloge.Size = new Size(121, 23);
+            cmbUloge.TabIndex = 18;
+            // 
+            // btnOdaberiUlogu
+            // 
+            btnOdaberiUlogu.Location = new Point(712, 29);
+            btnOdaberiUlogu.Name = "btnOdaberiUlogu";
+            btnOdaberiUlogu.Size = new Size(94, 23);
+            btnOdaberiUlogu.TabIndex = 19;
+            btnOdaberiUlogu.Text = "Odaberi ulogu";
+            btnOdaberiUlogu.UseVisualStyleBackColor = true;
+            btnOdaberiUlogu.Click += btnOdaberiUlogu_Click;
+            // 
+            // clbUloge
+            // 
+            clbUloge.FormattingEnabled = true;
+            clbUloge.Location = new Point(821, 60);
+            clbUloge.Name = "clbUloge";
+            clbUloge.Size = new Size(136, 112);
+            clbUloge.TabIndex = 20;
+            // 
             // frmNoviStudent
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(579, 269);
+            ClientSize = new Size(1000, 269);
+            Controls.Add(clbUloge);
+            Controls.Add(btnOdaberiUlogu);
+            Controls.Add(cmbUloge);
+            Controls.Add(dataGridView1);
             Controls.Add(btnNovaLozinka);
             Controls.Add(cbAktivan);
             Controls.Add(btnSlika);
@@ -261,6 +318,7 @@
             Load += frmNoviStudent_Load;
             ((System.ComponentModel.ISupportInitialize)pbSlika).EndInit();
             ((System.ComponentModel.ISupportInitialize)errorProvider1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -288,5 +346,10 @@
         private CheckBox cbAktivan;
         private Button btnNovaLozinka;
         private ErrorProvider errorProvider1;
+        private DataGridView dataGridView1;
+        private Button btnOdaberiUlogu;
+        private ComboBox cmbUloge;
+        private DataGridViewTextBoxColumn Naziv;
+        private CheckedListBox clbUloge;
     }
 }

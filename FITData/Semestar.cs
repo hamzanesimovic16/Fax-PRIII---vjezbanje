@@ -14,5 +14,11 @@ namespace FITData
         public string Oznaka { get; set; }
         public string Opis { get; set; }
         public bool Aktivan { get; set; }
+
+
+        public override string ToString()
+        {
+            return Oznaka;
+        }
     }
 }
