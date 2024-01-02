@@ -1,3 +1,4 @@
+using FITFormsNew.Izvjestaji;
 using FITFormsNew.Predavanje_5;
 using FITFormsNew.Predavanje_7;
 
@@ -14,7 +15,7 @@ namespace FITFormsNew
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            var startnaForma = new frmPretragaStudenata();
+            var startnaForma = new frmIzvjestaj();
             Application.Run(startnaForma );
         }
     }
