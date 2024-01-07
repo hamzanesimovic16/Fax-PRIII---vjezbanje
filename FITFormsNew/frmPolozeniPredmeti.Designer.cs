@@ -44,6 +44,7 @@
             pbSlika = new PictureBox();
             lblBrojIndeksa = new Label();
             lblImePrezime = new Label();
+            btnPrintajUvjerenje = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvPolozeniPredmeti).BeginInit();
             ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbSlika).BeginInit();
@@ -173,11 +174,22 @@
             lblImePrezime.Size = new Size(0, 47);
             lblImePrezime.TabIndex = 10;
             // 
+            // btnPrintajUvjerenje
+            // 
+            btnPrintajUvjerenje.Location = new Point(636, 450);
+            btnPrintajUvjerenje.Name = "btnPrintajUvjerenje";
+            btnPrintajUvjerenje.Size = new Size(152, 23);
+            btnPrintajUvjerenje.TabIndex = 11;
+            btnPrintajUvjerenje.Text = "Printaj uvjerenje";
+            btnPrintajUvjerenje.UseVisualStyleBackColor = true;
+            btnPrintajUvjerenje.Click += btnPrintajUvjerenje_Click;
+            // 
             // frmPolozeniPredmeti
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(800, 485);
+            Controls.Add(btnPrintajUvjerenje);
             Controls.Add(lblImePrezime);
             Controls.Add(lblBrojIndeksa);
             Controls.Add(pbSlika);
@@ -216,5 +228,6 @@
         private PictureBox pbSlika;
         private Label lblBrojIndeksa;
         private Label lblImePrezime;
+        private Button btnPrintajUvjerenje;
     }
 }

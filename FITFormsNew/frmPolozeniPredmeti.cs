@@ -1,4 +1,5 @@
 ﻿using FITData;
+using FITFormsNew.Izvjestaji;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,7 +17,7 @@ namespace FITFormsNew
     {
         private Student? odabraniStudent;
 
-        DLWMSDbContext db=new DLWMSDbContext();
+        DLWMSDbContext db = new DLWMSDbContext();
 
         public frmPolozeniPredmeti(Student odabraniStudent)
         {
@@ -53,7 +54,7 @@ namespace FITFormsNew
         private void UcitajPolozenePredmete()
         {
             dgvPolozeniPredmeti.DataSource = null;
-            dgvPolozeniPredmeti.DataSource = db.PolozeniPredmeti.Where(s=>s.StudentId==odabraniStudent.Id).ToList();
+            dgvPolozeniPredmeti.DataSource = db.PolozeniPredmeti.Where(s => s.StudentId == odabraniStudent.Id).ToList();
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -66,7 +67,7 @@ namespace FITFormsNew
             if (ValidanUnos())
             {
                 var predmet = cmbPredmet.SelectedItem as Predmet;
-                var ponovljenUnos = db.PolozeniPredmeti.Where(p => p.StudentId == odabraniStudent.Id && predmet.Id==p.PredmetId).Count() > 0;
+                var ponovljenUnos = db.PolozeniPredmeti.Where(p => p.StudentId == odabraniStudent.Id && predmet.Id == p.PredmetId).Count() > 0;
 
                 if (ponovljenUnos)
                 {
@@ -98,5 +99,29 @@ namespace FITFormsNew
                 Validator.Validiraj(cmbPredmet, errorProvider1, Resursi.Get(Kljucevi.RequiredValue)) &&
                 Validator.Validiraj(cmbOcjena, errorProvider1, Resursi.Get(Kljucevi.RequiredValue));
         }
+
+        private void btnPrintajUvjerenje_Click(object sender, EventArgs e)
+        {
+            var dtoObjekat = new dtoPrint()
+            {
+                ImePrezime = $"{odabraniStudent.Ime} {odabraniStudent.Prezime}",
+                BrojIndeksa = odabraniStudent.Indeks,
+                PolozeniPredmeti = dgvPolozeniPredmeti.DataSource as List<PolozeniPredmet>
+            };
+
+            var printForma = new frmIzvjestaj(dtoObjekat);
+            printForma.ShowDialog();
+        }
+    }
+
+    public class dtoPrint
+    {
+        public string ImePrezime { get; set; }
+        public string BrojIndeksa { get; set; }
+
+        public List<PolozeniPredmet> PolozeniPredmeti { get; set; }
+
+
+
     }
 }
