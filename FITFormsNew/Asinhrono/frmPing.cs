@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FITData;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,15 +19,22 @@ namespace FITFormsNew.Asinhrono
             InitializeComponent();
         }
         public string Sadrzaj { get; set; }
-        private void btnPing_Click(object sender, EventArgs e)
+
+        DLWMSDbContext db=new DLWMSDbContext();
+        private async void btnPing_Click(object sender, EventArgs e)
         {
-            Thread Olx=new Thread(PingOlx);
-            Thread Google=new Thread(PingGoogle);
+            Thread noviThread = new Thread(() => { Ping(new dtoPing() { Lokacija = "www.olx.ba", BrojPonavljanja = 20, Sleep = 200 }); }) ;
+            //Thread Google=new Thread(PingGoogle);
+            Thread DrugiThread = new Thread(() => { UcitajStudenta(); });
+            //Olx.Start();
+            //Google.Start();
 
-            Olx.Start();
-            Google.Start();
+            //await Task.Run(() => { UcitajStudenta(); });
+            TestMetoda();
+            Task.Run(() => { Ping(new dtoPing() { Lokacija = "www.olx.ba", BrojPonavljanja = 20, Sleep = 200 }); });
 
-
+            //noviThread.Start();
+            //DrugiThread.Start();
 
             //Olx.Join();
             //Google.Join();
@@ -35,6 +43,73 @@ namespace FITFormsNew.Asinhrono
             //PingGoogle();
             PrikaziSadrzaj();
             
+        }
+
+
+        private void UcitajStudenta()
+        {
+            try
+            {
+                var slika = db.Studenti.Find(5).Slika;
+                for (int i = 0; i < 50; i++)
+                {
+                    var noviStudent = new Student() {
+                        Aktivan=true,
+                        DatumRodjenja=DateTime.Now,
+                        Ime=$"Ime {i}",
+                        Prezime= $"Prezime {i}",
+                        Indeks=Generator.GenIndeks(),
+                        Slika=slika,
+                        SemestarId=1,
+                        Lozinka=Generator.generisiLozinku(),
+                        
+                    };
+                    db.Studenti.Add(noviStudent);
+                    Sadrzaj += $"Dodan student {i} {Environment.NewLine}";
+                    BeginInvoke(PrikaziSadrzaj);
+                    Thread.Sleep(200);
+
+                }
+                db.SaveChanges();
+                
+            }
+            catch(Exception ex) {
+                Sadrzaj += ex.Message;
+            }
+        }
+
+        private async void TestMetoda()
+        {
+            await Task.Run(() => { Ping(new dtoPing() { BrojPonavljanja = 15, Lokacija = "www.facebook.com", Sleep = 200 }); }) ;
+            //Task.Run(() => { UcitajStudenta(); });
+            //UcitajStudenta();
+            MessageBox.Show("Zavrsena test metoda");
+        }
+        private void Ping(dtoPing obj)
+        {
+            try
+            {
+
+                var ping = new Ping();
+
+                for (int i = 0; i < obj.BrojPonavljanja; i++)
+                {
+                    var reply = ping.Send(obj.Lokacija);
+                    Sadrzaj += PingResToString(reply);
+                    BeginInvoke(PrikaziSadrzaj);
+                    Thread.Sleep(obj.Sleep);
+                }
+
+
+            }
+
+
+            catch (Exception err)
+            {
+                Sadrzaj += err.Message;
+            }
+
+
         }
 
         private void PrikaziSadrzaj()
@@ -106,5 +181,13 @@ namespace FITFormsNew.Asinhrono
                 Sadrzaj += err.Message;
             }
         }
+    }
+
+
+    class dtoPing
+    {
+        public string Lokacija { get; set; }
+        public int BrojPonavljanja { get; set; }
+        public int Sleep { get; set; }
     }
 }
